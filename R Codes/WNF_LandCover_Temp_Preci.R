@@ -1,3 +1,7 @@
+# These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases 
+#as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, 
+#with slight modification, to be applied to other diseases in the databases used. 
+#R Code written by Ofosuhene O. Apenteng and help from Lene Jung Kjær. 
 
 remove (list = objects() )
 library(lattice)
@@ -9,7 +13,7 @@ library(terra)
 library(tidyverse)
 library(dplyr)
 
-setwd("/Users/xqv795/Desktop/APENTENG_LENE")
+setwd("Your Directory")
 ### READ IN newest OIE DATA ###
 ##link to where files are - the below code will pick the newest file in the folder"
 df <- file.info(list.files("./data", full.names = T,pattern = "infur" )) # modded
@@ -165,17 +169,6 @@ prec <- rast("bio_12.tif")
 temp <- rast("bio_1.tif")
 horses <-rast("Ho_density.tif")
 corine <-rast("g1k_06wgs.tif")
-corine_attributes <- read.csv("clc_legend.csv")
-
-
-#convert rgb colors to hex:
-# Function to apply
-rgb2hex <- function(x) rgb(substr(x, 1, 3), substr(x, 5, 7), substr(x, 9, 11), maxColorValue = 255)
-corine_attributes$Color<-rgb2hex(corine_attributes$RGB)
-levels(corine) <-corine_attributes[c(1,4)]#corine_attributes[c(1,5)] # levels of the factors
-coltab(corine)<-corine_attributes[c(1,7)]
-
-#writeRaster(corine, '~/Desktop/APENTENG_LENE/corine_rat.tif', datatype='INT1U', overwrite = TRUE)
 cor <- rast("corine_rat_LEVEL2.tif")
 
 #-------------------------------------------------------
@@ -475,8 +468,7 @@ num_obs = nrow(datae)
 train_index = sample(num_obs, size = trunc(0.80 * num_obs))
 train  <- datae[train_index, ]
 test   <- datae[-train_index, ]
-#https://cran.r-project.org/web/packages/caret/vignettes/caret.html
-#https://daviddalpiaz.github.io/r4sl/linear-models.html
+
 #Testing the accuracy
 library(caret)
 rmse = function(actual, predicted) {
@@ -499,8 +491,6 @@ plot(train$cases,predict(m10, train),
 
 #-----------------------------------------------------
 #retrieve coordinates in matrix form
-#https://beckmw.wordpress.com/2013/01/07/breaking-the-rules-with-spatial-correlation/
-
 WOEM_horse2 = WOEM_horse1
 datw1 <- st_coordinates(WOEM_horse2$geometry)
 #Renaming
@@ -546,7 +536,6 @@ for (i in 1:nrow(za_WNF_horse)){
 ## now aggregate per week per year per country
 za_WNF_horse_weekly <- za_WNF_horse  %>% 
   group_by(iso_code, isoweek,isoyear) %>% summarise(no_outbreaks = sum(cases)) 
-
 
 colnames(za_WNF_horse_weekly)<- c("ADM0_A3", "Week", "Year","no_outbreaks")
 
@@ -613,7 +602,6 @@ plot(AI_WNF_horse_sts, type = observed ~ time, ylab="No. of reported cases",
      main = "Number of WNF_Horse cases in Europe")
 
 plot(AI_WNF_horse_sts_twoWeeks, type = observed ~ time, ylab="No. of reported cases")
-
 
 #------------------------------------------------------
 #WNF_Bird
@@ -840,266 +828,4 @@ plot(AI_WNF_WOEM_horse_sts, type = observed ~ time, ylab="No. of reported cases"
      main = "Number of WNF_Horse cases within WOAH&Empres_i in Europe")
 
 plot(AI_WNF_WOEM_horse_sts_twoWeeks, type = observed ~ time, ylab="No. of reported cases")
-
-
-
-
-
-
-#-------------------------------
-library(glmmTMB)
-library(DHARMa)
-library(MuMIn)
-
-#check your data - to see if it is overdispersed, if the ratio between variances and means is >1 your data is overdispersed
-dispersionstats <- europe_dat_WNF_sf_birds %>%
-  summarise(
-    means = mean(cases, na.rm=T),
-    variances = var(cases,na.rm=T),
-    ratio = variances/means)
-dispersionstats
-
-
-# if it is overdispersed - you should probably use a negative binomial distribution
-#Here I use the packages glmmTMB, which is a generalised linear model, that can incorporate spatial- and temporal autocorrelation and zero-inflation
-
-#you can also test, if a poisson or a negative binomial model is better:
-poismodel <-glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_WNF_sf_birds, family = "poisson") 
-nbmodel <- glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_WNF_sf_birds,family=nbinom1)
-model.sel(poismodel, nbmodel)# which one is better
-
-
-#univariable tests
-m0<- glmmTMB(cases~temp, ziformula=~ 0, data=europe_dat_WNF_sf_birds, family=nbinom1)
-summary(m0)
-#THEN IN A MULTIVARIABLE TESTS, YOU CAN DO THIS:
-m1<- glmmTMB(cases~cover, ziformula=~ 0, data=europe_dat_WNF_sf_birds, family="poisson")
-summary(m1)
-
-
-cases_pred_birds <-NULL
-
-#create fake id for each row, to keep track of rows
-europe_dat_WNF_sf_birds$ID <- 1:nrow(europe_dat_WNF_sf_birds)
-
-###Change 880 by the number of observation you have###
-for (i in 1:nrow(europe_dat_WNF_sf_birds)) #i in 1:length(europe_dat_sf)
-{
-  ##Data that will be predicted
-  DataC1=europe_dat_WNF_sf_birds[europe_dat_WNF_sf_birds$ID==i,]
-  ###To train the model
-  DataCV=europe_dat_WNF_sf_birds[europe_dat_WNF_sf_birds$ID!=i,]
-  #testformula4<- update(testformula1, . ~ .- (ou(times + 0 | Site)))
-  M1 <- glmmTMB(cases~prec+cover, ziformula=~ 0, data= DataCV, family=nbinom1)# here I assume that the negative binomial was the better model
-  # is.unsorted(DataC1$times)
-  P1=predict(M1, DataC1,allow.new.levels=TRUE, type="response")
-  names(P1)=NULL
-  P1
-  cases_pred_birds =c(cases_pred_birds, P1)
-  print(i)
-}
-
-#bind the new predicted values to your original dataset
-europe_dat_sf<- cbind(europe_dat_sf, cases_pred)
-plot(europe_dat_sf$cases,europe_dat_sf$cases_pred)
-
-
-#To prediction
-europe_dat_WNF_sf_birds_pred <- read_excel("europe_dat_WNF_sf_birds_pred.xlsx")
-plot(europe_dat_WNF_sf_birds_pred$cases,europe_dat_WNF_sf_birds_pred$cases_pred_pigs,
-     ylab="Predicted cases",xlab="Observed cases",
-     main="WOAH for ASF-Pigs",pch=16, col="deeppink")
-
-aw <- europe_dat_WNF_sf_birds_pred
-
-dfi <- as.data.frame(aw[,c(55,66)])
-
-row.has.na <- apply(dfi, 1, function(x){any(is.na(x))})
-
-final <- dfi[!row.has.na,]
-
-Rsquared <- cor(final$cases,final$cases_pred_pigs)^2
-rmse <- sqrt(mean((final$cases - final$cases_pred)^2))
-rmse
-nrmse <- rmse/mean (final$cases)
-#-------------------------------------
-#Code for checking for spatial autocorrelation:
-
-##check for autocorrelation
-# extract residuals
-Residuals<- resid(m1)
-Residuals = data.frame(Residuals)
-Residuals$ID <- 1:nrow(Residuals)
-new <- europe_dat_WNF_sf_birds
-new$ID <- 1:nrow(europe_dat_WNF_sf_birds)
-#merge with original data
-
-europe_dat_WNF_sf_birds_new <- merge(new, Residuals, by ="ID")  #assuming you have an ID for each row in your dataset – else run YOURDATA$ID <- 1:nrow(YOURDATA)
-
-#now plot to see if there are any spatial patterns in the residuals
-tmap_mode("plot")
-
-# tm_shape(europe_dat_WNF_sf_birds_new) +
-#   tm_polygons(title="Residuals",col="res", palette="Reds")+
-#   tm_layout(legend.outside = TRUE) +
-#   tm_scale_bar(position=c("RIGHT","BOTTOM"))+
-#   tm_compass(position=c("RIGHT","top"))
-# 
-# tm_shape(europe_dat_sf_new) +
-#   tm_polygons()+
-#   tm_dots(title="Residuals",col="res", palette="Reds")
-
-tm_shape(prec/100) +
-  tm_polygons()+
-  tm_shape(europe_dat_WNF_sf_birds_new) + 
-  tm_dots (col="Residuals",palette="Blues")
-
-#---------------------------------------------------
-
-#check your data - to see if it is overdispersed, if the ratio between variances and means is >1 your data is overdispersed
-dispersionstats <- europe_dat_WNF_sf_horse %>%
-  summarise(
-    means = mean(cases, na.rm=T),
-    variances = var(cases,na.rm=T),
-    ratio = variances/means)
-dispersionstats
-
-
-# if it is overdispersed - you should probably use a negative binomial distribution
-#Here I use the packages glmmTMB, which is a generalised linear model, that can incorporate spatial- and temporal autocorrelation and zero-inflation
-
-#you can also test, if a poisson or a negative binomial model is better:
-poismodel <-glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_WNF_sf_horse, family = "poisson") 
-nbmodel <- glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_WNF_sf_horse,family=nbinom1)
-model.sel(poismodel, nbmodel)# which one is better
-
-
-#univariable tests
-m0<- glmmTMB(cases~prec, ziformula=~ 0, data=europe_dat_WNF_sf_horse, family="poisson")
-summary(m0)
-#THEN IN A MULTIVARIABLE TESTS, YOU CAN DO THIS:
-m1<- glmmTMB(cases~prec+temp+cover, ziformula=~ 0, data=europe_dat_WNF_sf_horse, family="poisson")
-summary(m1)
-
-
-cases_pred_horse <-NULL
-
-#create fake id for each row, to keep track of rows
-europe_dat_WNF_sf_horse$ID <- 1:nrow(europe_dat_WNF_sf_horse)
-
-###Change 880 by the number of observation you have###
-for (i in 1:nrow(europe_dat_WNF_sf_horse)) #i in 1:length(europe_dat_sf)
-{
-  ##Data that will be predicted
-  DataC1=europe_dat_WNF_sf_horse[europe_dat_WNF_sf_horse$ID==i,]
-  ###To train the model
-  DataCV=europe_dat_WNF_sf_horse[europe_dat_WNF_sf_horse$ID!=i,]
-  #testformula4<- update(testformula1, . ~ .- (ou(times + 0 | Site)))
-  M1 <- glmmTMB(cases~prec+temp+cover, ziformula=~ 0, data= DataCV, family="poisson")# here I assume that the negative binomial was the better model
-  # is.unsorted(DataC1$times)
-  P1=predict(M1, DataC1,allow.new.levels=TRUE, type="response")
-  names(P1)=NULL
-  P1
-  cases_pred_horse =c(cases_pred_horse, P1)
-  print(i)
-}
-
-#bind the new predicted values to your original dataset
-europe_dat_sf<- cbind(europe_dat_sf, cases_pred)
-plot(europe_dat_sf$cases,europe_dat_sf$cases_pred)
-
-
-#To prediction
-europe_data_WNF_horse_pred <- read_excel("europe_data_WNF_horse_pred.xlsx")
-plot(europe_data_WNF_horse_pred$cases,europe_data_WNF_horse_pred$cases_pred_pigs,
-     ylab="Predicted cases",xlab="Observed cases",
-     main="WOAH for ASF-Pigs",pch=16, col="deeppink")
-
-aw <- europe_data_WNF_horse_pred
-
-dfi <- as.data.frame(aw[,c(55,66)])
-
-row.has.na <- apply(dfi, 1, function(x){any(is.na(x))})
-
-final <- dfi[!row.has.na,]
-
-Rsquared <- cor(final$cases,final$cases_pred_pigs)^2
-rmse <- sqrt(mean((final$cases - final$cases_pred)^2))
-rmse
-nrmse <- rmse/mean (final$cases)
-#-------------------------------------
-#Code for checking for spatial autocorrelation:
-
-##check for autocorrelation
-# extract residuals
-Residuals<- resid(m1)
-Residuals = data.frame(Residuals)
-Residuals$ID <- 1:nrow(Residuals)
-new <- europe_data_WNF_horse
-new$ID <- 1:nrow(europe_data_WNF_horse)
-#merge with original data
-
-europe_data_WNF_horse_new <- merge(new, Residuals, by ="ID")  #assuming you have an ID for each row in your dataset – else run YOURDATA$ID <- 1:nrow(YOURDATA)
-
-#now plot to see if there are any spatial patterns in the residuals
-tmap_mode("plot")
-
-# tm_shape(europe_data_WNF_horse_new) +
-#   tm_polygons(title="Residuals",col="res", palette="Reds")+
-#   tm_layout(legend.outside = TRUE) +
-#   tm_scale_bar(position=c("RIGHT","BOTTOM"))+
-#   tm_compass(position=c("RIGHT","top"))
-# 
-# tm_shape(europe_dat_sf_new) +
-#   tm_polygons()+
-#   tm_dots(title="Residuals",col="res", palette="Reds")
-
-tm_shape(prec/100) +
-  tm_polygons()+
-  tm_shape(europe_data_WNF_horse_new) + 
-  tm_dots (col="Residuals",palette="Blues")
-
-
-
-
-
-
-##############################################################
-# Regression analysis
-model1  <- lm(cases ~ temp, data = europe_dat_WNF_sf_birds)
-summary(model1)
-model2  <- lm(cases ~ prec, data = europe_dat_WNF_sf_birds)
-summary(model2)
-model3  <- lm(cases ~ temp + prec, data = europe_dat_WNF_sf_birds)
-summary(model3)
-
-# We can set reference point 
-selection1 <- c( "Olive groves", "Pastures", "Fruit trees and berry plantations" )
-europe_dat_sf_i <- europe_dat_WNF_sf_horse  %>%
-  dplyr::filter(cover %in% selection1)
-
-model14  <- lm(cases ~ temp + prec + cover, data = europe_dat_WNF_sf_birds)
-summary(model14)
-
-model15  <- lm(cases ~ temp + prec + cover, data = europe_dat_WNF_sf_horse)
-summary(model15)
-
-#--------------------------
-add=as.data.frame(rep(1,dim(Empres_dat_WNF_sf_horse)[1]))
-add <- add %>% 
-  rename(cases = rep(1, dim(Empres_dat_WNF_sf_horse)[1]))
-add <- add %>% 
-  rename(cases = cases11)
-Empres_dat_WNF_sf_horse_Emp = Empres_dat_WNF_sf_horse
-Empres_dat_WNF_sf_horse_Emp$cases = add$cases 
-model16  <- lm(cases ~ temp + prec + cover, data = Empres_dat_WNF_sf_horse_Emp)
-summary(model16)
-
-#y = bo + b_1*temp + . . . . . . .
-#The confidence interval of the model coefficient can be extracted as follow:
-confint(model1)
-confint(model2)
-confint(model3)
-
-
 
