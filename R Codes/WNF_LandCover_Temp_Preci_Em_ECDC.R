@@ -1,3 +1,7 @@
+# These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases 
+#as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, 
+#with slight modification, to be applied to other diseases in the databases used. 
+#R Code written by Ofosuhene O. Apenteng and help from Lene Jung Kjær. 
 
 remove (list = objects() )
 library(lattice)
@@ -9,7 +13,7 @@ library(terra)
 library(tidyverse)
 library(dplyr)
 
-setwd("/Users/xqv795/Desktop/APENTENG_LENE")
+setwd("Your Directory")
 ### READ IN newest OIE DATA ###
 ##link to where files are - the below code will pick the newest file in the folder"
 df <- file.info(list.files("./data", full.names = T,pattern = "infur" )) # modded
@@ -75,16 +79,6 @@ Empres_dat_WNF_sf_humans<- Empres_dataH_WNF_sf_humans[!Empres_dataH_WNF_sf_human
 prec <- rast("bio_12.tif")
 temp <- rast("bio_1.tif")
 corine <-rast("g1k_06wgs.tif")
-corine_attributes <- read.csv("clc_legend.csv")
-
-#convert rgb colors to hex:
-# Function to apply
-rgb2hex <- function(x) rgb(substr(x, 1, 3), substr(x, 5, 7), substr(x, 9, 11), maxColorValue = 255)
-corine_attributes$Color<-rgb2hex(corine_attributes$RGB)
-levels(corine) <-corine_attributes[c(1,4)]#corine_attributes[c(1,5)] # levels of the factors
-coltab(corine)<-corine_attributes[c(1,7)]
-
-#writeRaster(corine, '~/Desktop/APENTENG_LENE/corine_rat.tif', datatype='INT1U', overwrite = TRUE)
 cor <- rast("corine_rat_LEVEL2.tif")
 #------------------------------------------------------
 
@@ -120,20 +114,4 @@ tm_shape(cor) +
                 col = "deeppink",
                 shape = 8,size = 0.3,
                 labels="Empres-i")
-
-#-------------------------------------------------------
-#extract raster values to point locations using the terra package
-#ECDC
-#prec
-precip <-terra::extract(prec, vect(Empres_dat_WNF_sf_humans))
-Empres_dat_WNF_sf_humans$prec <- precip$bio_12/100
-#temperature
-tempe <-terra::extract(temp, vect(Empres_dat_WNF_sf_humans))
-Empres_dat_WNF_sf_humans$temp <- tempe$bio_1/10
-#landcover
-cover <-terra::extract(cor, vect(EEmpres_dat_WNF_sf_humans))
-Empres_dat_WNF_sf_humans$cover <- cover$LABEL2
-
-#---------------------------------------------
-
 
