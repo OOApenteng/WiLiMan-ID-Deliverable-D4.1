@@ -1,3 +1,7 @@
+# These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases 
+#as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, 
+#with slight modification, to be applied to other diseases in the databases used. 
+#R Code written by Ofosuhene O. Apenteng and help from Lene Jung Kjær. 
 
 remove (list = objects() )
 library(lattice)
@@ -85,22 +89,9 @@ Sweden_dat_CWD_sf_deers <- st_as_sf(Sweden_dat_CWD_deers, coords=c("Latitude","L
 prec<- rast("bio_12.tif")
 temp<- rast("bio_1.tif")
 corine <-rast("g1k_06wgs.tif")
-corine_attributes <- read.csv("clc_legend.csv")
-
-#convert rgb colors to hex:
-# Function to apply
-rgb2hex <- function(x) rgb(substr(x, 1, 3), substr(x, 5, 7), substr(x, 9, 11), maxColorValue = 255)
-corine_attributes$Color<-rgb2hex(corine_attributes$RGB)
-levels(corine) <-corine_attributes[c(1,4)]#corine_attributes[c(1,5)] # levels of the factors
-coltab(corine)<-corine_attributes[c(1,7)]
-
-#writeRaster(corine, 'corine_rat_LEVEL2.tif', datatype='INT1U', overwrite = TRUE)
 cor <- rast("corine_rat_LEVEL2.tif")
 
 #------------------------------------------------------
-#https://search.r-project.org/CRAN/refmans/tmap/html/tm_symbols.html
-#https://www.rdocumentation.org/packages/tmap/versions/3.3-4/topics/tm_symbols
-#https://finnstats.com/2021/06/13/r-plot-pch-symbols-different-point-shapes-in-r/
 #--Plots
 tm_shape(prec/100) +
   tm_raster(title="Annual precipitation (CWD_Deers)",palette="Blues") +
@@ -216,39 +207,5 @@ cover <-terra::extract(cor, vect(Norway_dat_CWD_sf_deers))
 Norway_dat_CWD_sf_deers$cover <- cover$LABEL2
 #---------------------------------------------
 
-library(glmmTMB)
-library(DHARMa)
-library(MuMIn)
-
-#check your data - to see if it is overdispersed, if the ratio between variances and means is >1 your data is overdispersed
-dispersionstats <- Norway_dat_CWD_sf_deers %>%
-  summarise(
-    means = mean(cases, na.rm=T),
-    variances = var(cases,na.rm=T),
-    ratio = variances/means)
-dispersionstats
-
-
-
-
-
-
-
-
-
-
-
-#--------------------------------------------
-#60.0499998 7.416665 ha
-#61.839329976 4.959829494 bre
-#60.423831638 11.63749745 North
-#64.5783089 17.888237 Thi
-#60.83416333 10.071833046 eth
-#43.259622, 2.340387 vine
-#60.270277777778 , 9.4080555555556 Sigdal
-#63.2177 11.03938 selbu
-#  Location FLESBERG    Latitude  59.83283000    Longitude  9.58308000  
-#64.546988 11.034265 Nor
-#67.28, 14.40501 Bum
 
 
