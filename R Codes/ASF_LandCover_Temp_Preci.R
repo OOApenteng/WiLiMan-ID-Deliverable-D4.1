@@ -1,3 +1,7 @@
+# These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases 
+#as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, 
+#with slight modification, to be applied to other diseases in the databases used. 
+#R Code written by Ofosuhene O. Apenteng and help from Lene Jung Kjær. 
 
 remove (list = objects() )
 library(lattice)
@@ -9,7 +13,7 @@ library(terra)
 library(tidyverse)
 library(dplyr)
 
-setwd("/Users/xqv795/Desktop/APENTENG_LENE")
+setwd("Your Directory")
 ### Read the the various the diseases from the WOAH database ###
 ##link to where files are - the below code will pick the newest file in the folder"
 df <- file.info(list.files("./data", full.names = T,pattern = "infur" )) # modded
@@ -173,30 +177,14 @@ WOEM_pigs <- WOEM_pigs[!WOEM_pigs$country %in% RemoveCountries, ]
 RemoveCountries <- c("Ukraine","Russia", "Belarus")
 WOEM_boar<- WOEM_boar[!WOEM_boar$country %in% RemoveCountries, ]
 
-################################################################
-
 #------------------------------------------------------
-
 #Read in the bio climate and land cover data
 prec<- rast("bio_12.tif")
 temp<- rast("bio_1.tif")
 stock <-rast("Pg_density.tif")
 wild <-rast("wildboar_density.tif")
 corine <-rast("g1k_06wgs.tif")
-corine_attributes <- read.csv("clc_legend.csv")
-
-
-#In order to get the exact colours of the land cover we convert rgb colors to hex:
-# Function to apply
-rgb2hex <- function(x) rgb(substr(x, 1, 3), substr(x, 5, 7), substr(x, 9, 11), maxColorValue = 255)
-corine_attributes$Color<-rgb2hex(corine_attributes$RGB)
-levels(corine) <-corine_attributes[c(1,4)] #corine_attributes[c(1,5)] # levels of the factors
-coltab(corine)<-corine_attributes[c(1,7)]
-
-#The land cover is then saved
-#writeRaster(corine, 'corine_rat_LEVEL2.tif', datatype='INT1U', overwrite = TRUE)
 cor <- rast("corine_rat_LEVEL2.tif")
-
 #-----------------------------------------------------------
 #Plots 
 tm_shape(prec/100) +
@@ -565,8 +553,6 @@ R2(predict(m2, test), test$cases)
 
 #Plot
 library(jtools)
-#https://cran.r-project.org/web/packages/jtools/vignettes/effect_plot.html
-#https://jtools.jacob-long.com/reference/effect_plot.html
 effect_plot(m2, pred=prec, interval = TRUE,
             int.type = "confidence", int.width = .05, data = train,
             x.lab="Precipitation",y.lab="Predicted cases",
@@ -628,12 +614,6 @@ effect_plot(m4, pred=temp, interval = TRUE,
             int.type = "confidence", int.width = .5, data = train,
             x.lab="Temperature",y.lab="Predicted cases",
             main="WOAH for ASF-Wild boars")
-
-
-#plot(train$cases,predict(m4, train),
-   #  ylab="Predicted cases (precipitation & temperature)",xlab="Observed cases",
-   #  main="WOAH for ASF-Wild boars",pch=16, col="deeppink")
-
 #--------------------------------------------------
 #---Merged Pigs---
 #After check univariate regression analysis now proceed to do multivariate regression analysis:
@@ -679,10 +659,6 @@ effect_plot(m6, pred=temp, interval = TRUE,
             int.type = "confidence", int.width = .5, data = train,
             x.lab="Temperature",y.lab="Predicted cases",
             main="Merged (WOAH&Empres_i) for ASF-Pigs")
-
-#plot(train$cases,predict(m6, train),
-  #   ylab="Predicted cases (temperature)",xlab="Observed cases",
-  #   main="Merged (WOAH&Empres_i) for ASF-Pigs",pch=16, col="deeppink")
 #---------------------------------------------------------
 ##---Merged Wild boar---########
 WOEM_boar1  <- WOEM_boar %>% 
@@ -738,13 +714,8 @@ effect_plot(m8, pred=wild, interval = TRUE,
             main="Merged (WOAH&Empres_i) for ASF-Wild boars")
 
 
-#plot(train$cases,predict(m8, train),
- #    ylab="Predicted cases (precipitation, temperature & wild boar density)",xlab="Observed cases",
-  #   main="Merged (WOAH&Empres_i) for ASF-Wild boars",pch=16, col="deeppink")
-
 ###########################
 #retrieve coordinates in matrix form
-#https://beckmw.wordpress.com/2013/01/07/breaking-the-rules-with-spatial-correlation/
 europe_dat_ASF_sf_pigs2 = europe_dat_ASF_sf_pigs1
 dat <- st_coordinates(europe_dat_ASF_sf_pigs2$geometry)
 #Renaming
@@ -787,176 +758,7 @@ residuals=resid(m8)
 datw11 = cbind.data.frame(datw1,residuals)
 coordinates(datw11)<-c('lon','lat')
 bubble(datw11,zcol='residuals')
-#-------------------------------------------------------------
-# library(sf)
-# #retrieve coordinates in matrix form
-# europe_dat_ASF_sf_pigs2 = europe_dat_ASF_sf_pigs1
-# data_spatial <- st_coordinates(europe_dat_ASF_sf_pigs2$geometry) %>% 
-#   as.data.frame() %>% 
-#   mutate(LAT = Y, 
-#          LONG = X,
-#          Residual = resid(m2) ) %>% 
-#   dplyr::select(LONG,LAT, Residual)
-# 
-# library(sp)
-# coordinates(data_spatial) <-c('LONG','LAT')
-# bubble(data_spatial, zcol='Residuals')
 
-#-----------------------------------------------------
-library(glmmTMB)
-library(DHARMa)
-library(MuMIn)
-
-#check your data - to see if it is overdispersed, if the ratio between variances and means is >1 your data is overdispersed
-dispersionstats <- europe_dat_ASF_sf_pigs %>%
-  summarise(
-    means = mean(cases, na.rm=T),
-    variances = var(cases,na.rm=T),
-    ratio = variances/means)
-dispersionstats
-
-
-# if it is overdispersed - you should probably use a negative binomial distribution
-#Here I use the packages glmmTMB, which is a generalised linear model, that can incorporate spatial- and temporal autocorrelation and zero-inflation
-
-#you can also test, if a poisson or a negative binomial model is better:
-#poismodel <-glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_ASF_sf_pigs, family = "poisson") 
-nbmodel <- glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_ASF_sf_pigs,family=nbinom1)
-#model.sel(poismodel, nbmodel)# which one is better
-
-
-#univariable tests
-m0<- glmmTMB(cases~temp, ziformula=~ 0, data=europe_dat_ASF_sf_pigs, family=nbinom1)
-summary(m0)
-#THEN IN A MULTIVARIABLE TESTS, YOU CAN DO THIS:
-europe_dat_ASF_sf_pigs1  <- europe_dat_ASF_sf_pigs %>% 
-  dplyr::select(prec, temp, cases, cover) %>% 
-  na.omit() #%>% 
-  #mutate(Lat = st_coordinates(europe_dat_ASF_sf_pigs1$geometry)[,2],
-      #   Long = st_coordinates(europe_dat_ASF_sf_pigs1$geometry)[,1])
-
-m1<- glmmTMB(cases~prec+temp+cover, ziformula=~ 0, data=europe_dat_ASF_sf_pigs1, family=nbinom1)
-summary(m1)
-
-#To prediction
-europe_dat_ASF_sf_pigs_pred <- read_excel("europe_dat_ASF_sf_pigs_pred.xlsx")
-plot(europe_dat_ASF_sf_pigs_pred$cases,europe_dat_ASF_sf_pigs_pred$cases_pred_pigs,
-     ylab="Predicted cases",xlab="Observed cases",
-     main="WOAH for ASF-Pigs",pch=16, col="deeppink")
-
-aw <- europe_dat_ASF_sf_pigs_pred
-
-dfi <- as.data.frame(aw[,c(55,66)])
-
-row.has.na <- apply(dfi, 1, function(x){any(is.na(x))})
-
-final <- dfi[!row.has.na,]
-
-Rsquared <- cor(final$cases,final$cases_pred_pigs)^2
-rmse <- sqrt(mean((final$cases - final$cases_pred)^2))
-rmse
-nrmse <- rmse/mean (final$cases)
-#-------------------------------------
-#retrieve coordinates in matrix form
-data_spatial <- st_coordinates(europe_dat_ASF_sf_pigs1$geometry) %>% 
-  as.data.frame() %>% 
-  mutate(LAT = Y, 
-         LONG = X,
-         Residuals = resid(m1) )%>% 
-  dplyr::select(LONG,LAT, Residuals)
-#Resid <- resid(m1) #8128
-
-library(sp)
-#datat_spatial <-data.frame(data_spatial$LONG,data_spatial$LAT,resids=resid(m1))
-coordinates(data_spatial) <-c('LONG','LAT')
-bubble(data_spatial, zcol='Residuals')
-
-#Code for checking for spatial autocorrelation:
-
-##check for autocorrelation
-# extract residuals
-Residuals<- resid(m1)
-Residuals = data.frame(Residuals)
-Residuals$ID <- 1:nrow(Residuals)
-new <- europe_dat_ASF_sf_pigs
-new$ID <- 1:nrow(europe_dat_ASF_sf_pigs)
-#merge with original data
-
-europe_dat_ASF_sf_pigs_new <- merge(new, Residuals, by ="ID")  #assuming you have an ID for each row in your dataset – else run YOURDATA$ID <- 1:nrow(YOURDATA)
-
-#now plot to see if there are any spatial patterns in the residuals
-tmap_mode("plot")
-tm_shape(prec/100) +
-  tm_polygons()+
-  tm_shape(europe_dat_ASF_sf_pigs_new) + 
-  tm_dots (col="Residuals",palette="Blues")
-#-------------------------------
-library(glmmTMB)
-library(DHARMa)
-library(MuMIn)
-
-#check your data - to see if it is overdispersed, if the ratio between variances and means is >1 your data is overdispersed
-dispersionstats <- europe_dat_ASF_sf_WildBoar %>%
-  summarise(
-    means = mean(cases, na.rm=T),
-    variances = var(cases,na.rm=T),
-    ratio = variances/means)
-dispersionstats
-
-
-# if it is overdispersed - you should probably use a negative binomial distribution
-#Here I use the packages glmmTMB, which is a generalised linear model, that can incorporate spatial- and temporal autocorrelation and zero-inflation
-
-#you can also test, if a poisson or a negative binomial model is better:
-poismodel <-glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_ASF_sf_WildBoar, family = "poisson") 
-nbmodel <- glmmTMB(cases~1, ziformula=~ 0,data = europe_dat_ASF_sf_WildBoar,family=nbinom1)
-model.sel(poismodel, nbmodel)# which one is better
-
-
-#univariable tests
-m0<- glmmTMB(cases~temp, ziformula=~ 0, data=europe_dat_ASF_sf_WildBoar, family=nbinom1)
-summary(m0)
-#THEN IN A MULTIVARIABLE TESTS, YOU CAN DO THIS:
-europe_dat_ASF_sf_WildBoar1  <- europe_dat_ASF_sf_WildBoar %>% 
-  dplyr::select(prec, temp, cases, cover) %>% 
-  na.omit() 
-
-m1<- glmmTMB(cases~prec+temp+cover, ziformula=~ 0, data=europe_dat_ASF_sf_WildBoar, family=nbinom1)
-summary(m1)
-
-#To prediction
-europe_dat_ASF_sf_WildBoar_pred <- read_excel("europe_dat_ASF_sf_WildBoar_pred.xlsx")
-plot(europe_dat_ASF_sf_WildBoar_pred$cases,europe_dat_ASF_sf_WildBoar_pred$cases_pred_pigs,
-     ylab="Predicted cases",xlab="Observed cases",
-     main="WOAH for ASF-Wild boar",pch=16, col="deeppink")
-
-aww <- europe_dat_ASF_sf_WildBoar_pred
-
-dfii <- as.data.frame(aww[,c(55,66)])
-
-row.has.na <- apply(dfii, 1, function(x){any(is.na(x))})
-
-final <- dfii[!row.has.na,]
-
-Rsquared <- cor(final$cases,final$cases_pred_Wildboar)^2
-rmse <- sqrt(mean((final$cases - final$cases_pred_Wildboar)^2))
-rmse
-nrmse <- rmse/mean (final$cases)
-#-------------------------------------
-
-#retrieve coordinates in matrix form
-data_spatial <- st_coordinates(europe_dat_ASF_sf_WildBoar1$geometry) %>% 
-  as.data.frame() %>% 
-  mutate(LAT = Y, 
-         LONG = X,
-         Residuals = resid(m1) )%>% 
-  dplyr::select(LONG,LAT, Residuals)
-#Resid <- resid(m1) #8128
-
-library(sp)
-#datat_spatial <-data.frame(data_spatial$LONG,data_spatial$LAT,resids=resid(m1))
-coordinates(data_spatial) <-c('LONG','LAT')
-bubble(data_spatial, zcol='Residuals')
 #------------------------------------
 #Code for checking for spatial autocorrelation:
 
@@ -988,71 +790,6 @@ tm_shape(prec/100) +
   tm_polygons()+
   tm_shape(europe_dat_ASF_sf_WildBoar_new) + 
   tm_dots (col="Residuals",palette="Blues")
-
-#########################################################
-dispersionstats <- Empres_dat_ASF_sf_pigs %>%
-  summarise(
-    means = mean(Species, na.rm=T),
-    variances = var(Species,na.rm=T),
-    ratio = variances/means)
-dispersionstats
-
-
-# if it is overdispersed - you should probably use a negative binomial distribution
-#Here I use the packages glmmTMB, which is a generalised linear model, that can incorporate spatial- and temporal autocorrelation and zero-inflation
-
-#you can also test, if a poisson or a negative binomial model is better:
-poismodel <-glmmTMB(cases~1, ziformula=~ 0,data = Empres_dat_ASF_sf_pigs, family = "poisson") 
-nbmodel <- glmmTMB(cases~1, ziformula=~ 0,data = Empres_dat_ASF_sf_pigs,family=nbinom1)
-model.sel(poismodel, nbmodel)# which one is better
-
-
-#univariable tests
-m0<- glmmTMB(cases~temp, ziformula=~ 0, data=Empres_dat_ASF_sf_pigs, family=nbinom1)
-summary(m0)
-#THEN IN A MULTIVARIABLE TESTS, YOU CAN DO THIS:
-Empres_dat_ASF_sf_pigs1  <- Empres_dat_ASF_sf_pigs %>% 
-  dplyr::select(prec, temp, cases, cover) %>% 
-  na.omit() #%>% 
-#mutate(Lat = st_coordinates(europe_dat_ASF_sf_pigs1$geometry)[,2],
-#   Long = st_coordinates(europe_dat_ASF_sf_pigs1$geometry)[,1])
-
-m1<- glmmTMB(cases~prec+temp+cover, ziformula=~ 0, data=Empres_dat_ASF_sf_pigs1, family=nbinom1)
-summary(m1)
-
-#To prediction
-europe_dat_ASF_sf_pigs_pred <- read_excel("europe_dat_ASF_sf_pigs_pred.xlsx")
-plot(europe_dat_ASF_sf_pigs_pred$cases,europe_dat_ASF_sf_pigs_pred$cases_pred_pigs,
-     ylab="Predicted cases",xlab="Observed cases",
-     main="WOAH for ASF-Pigs",pch=16, col="deeppink")
-
-aw <- europe_dat_ASF_sf_pigs_pred
-
-dfi <- as.data.frame(aw[,c(55,66)])
-
-row.has.na <- apply(dfi, 1, function(x){any(is.na(x))})
-
-final <- dfi[!row.has.na,]
-
-Rsquared <- cor(final$cases,final$cases_pred_pigs)^2
-rmse <- sqrt(mean((final$cases - final$cases_pred)^2))
-rmse
-nrmse <- rmse/mean (final$cases)
-#-------------------------------------
-#retrieve coordinates in matrix form
-data_spatial <- st_coordinates(Empres_dat_ASF_sf_pigs1$geometry) %>% 
-  as.data.frame() %>% 
-  mutate(LAT = Y, 
-         LONG = X,
-         Residuals = resid(m1) )%>% 
-  dplyr::select(LONG,LAT, Residuals)
-#Resid <- resid(m1) #8128
-
-library(sp)
-#datat_spatial <-data.frame(data_spatial$LONG,data_spatial$LAT,resids=resid(m1))
-coordinates(data_spatial) <-c('LONG','LAT')
-bubble(data_spatial, zcol='Residuals')
-
 #------------------------------------------------------
 #ASF_pigs
 library(surveillance)
@@ -1102,7 +839,6 @@ za_ASF_pigs_weekly <-za_ASF_pigs_weekly %>%
 za_ASF_pigs_weekly <-za_ASF_pigs_weekly %>% 
   group_by(ADM0_A3, Year) %>% 
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
-
 
 # CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
@@ -1504,50 +1240,4 @@ plot(AI_ASF_WOEM_boar_sts, type = observed ~ time, ylab="No. of reported cases",
      main = "Number of ASF_Wild Boar cases within WOAH&Empres_i in Europe")
 
 plot(AI_ASF_WOEM_boar_sts_twoWeeks, type = observed ~ time, ylab="No. of reported cases")
-
-
-
-##################################################################################
-### READ IN COVARIATES ###
-## read in file on coastal length and area of wetland
-covar_eur <-read_excel("./data/covariates.xlsx", sheet=1)
-
-library(countrycode)
-#get iso_code from country name
-covar_eur$iso_code  <- countrycode(covar_eur$SOVEREIGNT
-                                   ,"country.name","iso3c")
-
-#iso_code for Kosovo is not found in the countrycode function, so we set it manually
-covar_eur$iso_code[is.na(covar_eur$iso_code)] <- "KOS"
-
-#now that we have isocodes we merge with our data set
-colnames(covar_eur)[4] <- "ADM0_A3"
-za_ASF_WOEM_pigs_weekly <- merge(za_ASF_WOEM_pigs_weekly, covar_eur, by="ADM0_A3")
-
-# get data on area of country
-area_data <- as.data.frame(europeanCountries) %>% 
-  distinct(ADM0_A3,Shape_Area)
-#distinct(ADM0_A3,area_sqkm) #orgina
-
-
-#area fraction of summed countries
-# country area
-res3 <- merged[order(merged$weight, merged$Year,merged$Week),c('ADM0_A3','Year', "Week", "area_sqkm")]
-country_area <-res3 %>%  pivot_wider(
-  names_from = ADM0_A3,
-  values_from = area_sqkm,
-  id_cols = c(Year, Week)) %>% 
-  select(-Year,-Week) %>% 
-  as.matrix()
-
-area_frac <- country_area[subset_start:subset_end,,drop=FALSE]/rowSums(country_area[subset_start:subset_end,,drop=FALSE])
-
-### BASIC MODEL ###
-#basic model with adjacency neighborhood transmission and no seasonality 
-AI_sts_basic <- list(end = list(f = ~1,offset=area_frac), ar = list(f = ~1), 
-                     ne = list(f = ~1, weights = neighbourhood(AI_sts) == 1), 
-                     family = "NegBin1",optimizer = list(stop = list(tol=1e-5, niter=500), 
-                                                         regression = list(method="nlminb")), subset = TRAIN, keep.terms = TRUE)
-
-AI_sts_basic <-hhh4(stsObj = AI_sts,control = AI_sts_basic)
 
