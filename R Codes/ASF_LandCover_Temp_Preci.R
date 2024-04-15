@@ -482,6 +482,40 @@ Empres_dat_ASF_sf_WildBoar$temp <- tempe$bio_1/10
 #landcover
 cover <-terra::extract(cor, vect(Empres_dat_ASF_sf_WildBoar))
 Empres_dat_ASF_sf_WildBoar$cover <- cover$LABEL2
+
+#------------------------------------------------------
+#Checking for autocorrelation
+fak=europe_dat_ASF_sf_pigs %>% 
+  select(c(cases,prec,temp,stock))
+faky=sf::st_drop_geometry(fak)
+faki=faky
+fa=na.omit(faki)
+correlation <- cor(fa$cases, fa$stock, method = 'pearson') # Remember to change (a)biotic factor based what you want
+correlation
+
+fak1=europe_dat_ASF_sf_WildBoar %>% 
+  select(c(cases,prec,temp,wild))
+faky1=sf::st_drop_geometry(fak1)
+faki1=faky1
+fa1=na.omit(faki1)
+correlation <- cor(fa1$cases, fa1$prec, method = 'pearson') # Remember to change (a)biotic factor based what you want
+correlation
+
+fak11=WOEM_boar %>% 
+  select(c(cases,prec,temp,wild))
+faky11=sf::st_drop_geometry(fak11)
+faki11=faky11
+fa11=na.omit(faki11)
+correlation <- cor(fa11$cases, fa11$wild, method = 'pearson') # Remember to change (a)biotic factor based what you want
+correlation
+
+fak12=WOEM_pigs %>% 
+  select(c(cases,prec,temp,stock))
+faky12=sf::st_drop_geometry(fak12)
+faki12=faky12
+fa12=na.omit(faki12)
+correlation <- cor(fa12$cases,fa12$temp,method = "pearson")# Remember to change (a)biotic factor based what you want
+correlation
 #------------------------------------------------------
 #Univariate regression analysis for pigs
 summary(lm(cases ~ stock, data = europe_dat_ASF_sf_pigs))
