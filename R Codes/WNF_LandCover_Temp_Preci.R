@@ -425,6 +425,39 @@ Empres_dat_WNF_sf_horse$temp <- tempe$bio_1/10
 cover <-terra::extract(cor, vect(Empres_dat_WNF_sf_horse))
 Empres_dat_WNF_sf_horse$cover <- cover$LABEL2
 #------------------------------------------------------
+#Checking for autocorrelation
+fakb=europe_dat_WNF_sf_birds %>% 
+  select(c(cases,prec,temp))
+fakyb=sf::st_drop_geometry(fakb)
+fakib=fakyb
+fab=na.omit(fakib)
+correlation <- cor(fab$cases, fab$temp, method = 'pearson') #Change here based on the (a)biotic factors you want to check 
+correlation
+
+fakw=europe_dat_WNF_sf_horse %>% 
+  select(c(cases,prec,temp,horses))
+fakyw=sf::st_drop_geometry(fakw)
+fakiw=fakyw
+faw=na.omit(fakiw)
+correlation <- cor(faw$cases, faw$temp, method = 'pearson') #Change here based on the (a)biotic factors you want to check 
+correlation
+
+fake=WOEM_birds %>% 
+  select(c(cases,prec,temp))
+fakye=sf::st_drop_geometry(fake)
+fakie=fakye
+fae=na.omit(fakie)
+correlation <- cor(fae$cases, fae$prec, method = 'pearson') #Change here based on the (a)biotic factors you want to check 
+correlation
+
+fake=WOEM_horse %>% 
+  select(c(cases,prec,temp,horses))
+fakye=sf::st_drop_geometry(fake)
+fakie=fakye
+fae=na.omit(fakie)
+correlation <- cor(fae$cases, fae$horses, method = 'pearson') #Change here based on the (a)biotic factors you want to check 
+correlation
+#------------------------------------------------------
 #Univariate regression analysis for birds
 summary(lm(cases ~ temp, data = europe_dat_WNF_sf_birds))
 summary(lm(cases ~ prec, data = europe_dat_WNF_sf_birds)) 
