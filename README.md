@@ -4,7 +4,7 @@ Dataflow
 
 # Description
 
-These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, with slight modification, to be applied to other diseases in the databases used. R Code written by Ofosuhene O. Apenteng and help from Lene Jung Kjær.
+These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, with slight modification, to be applied to other diseases in the databases used. R Code written by Ofosuhene O. Apenteng.
 
 ## Getting Started
 
@@ -113,3 +113,6 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 #Plots
 
+#Acknowledgments
+Lene Jung Kjær
+Ana Rita Pinheiro Marques
