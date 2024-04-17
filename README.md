@@ -85,7 +85,7 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 #Univariate regression analysis to check for significance by negative binomial regression 
 #Multivariate regression analysis for negative binomial regression 
 
-# Time series analysis
+#Time series analysis
 #set all cases to 1, so we are counting the number of outbreaks instead of the number of birds affected
 #Dates and week numbers are tricky as they differ from year to year. Here we use iso 8601 to create the new variables - isoweek and isoyear
 
@@ -97,7 +97,7 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 #These methods fill in missing years for each country, by adding week 1 of the missing year (zero number of detections)
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES #
+#CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES #
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a (species you want to use) perspective
 
 #now calculate the neighborhood (matrix) and set column and row names
