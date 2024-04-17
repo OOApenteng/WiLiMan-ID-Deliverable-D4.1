@@ -41,10 +41,11 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 # Executing program
 
-#READ IN newest OIE DATA ###
+#Read of data 
+
 #link to where files are - the below code will pick the newest file in the folder"
 
-#CLEAN AND PREPARE DATA---------------------------------
+#Clear and prepare data
 
 #make sure that the outbreak start date is in date format
 #filter out other diseases than WNF, ASF, and CWD
@@ -57,11 +58,12 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 #We needed to represent spatial vector data to include points (coordinates),
 
-
 #-Remove these countries because we noticed that it was not part of Corine land cover
 
 #-Empres_I--from different database
+
 #Renaming
+
 #we only want data from Europe (so filter using the europe shapefile) and data from 2018 and onwards
 
 #pass them into the function as the `coords` parameter
