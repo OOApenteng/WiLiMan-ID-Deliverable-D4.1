@@ -113,6 +113,5 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 #Plots
 
-#Acknowledgments
-Lene Jung Kjær
-Ana Rita Pinheiro Marques
+# Acknowledgments
+Lene Jung Kjær and Ana Rita Pinheiro Marques
