@@ -97,7 +97,8 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 #These methods fill in missing years for each country, by adding week 1 of the missing year (zero number of detections)
 
-#CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES #
+#Create data, neighborhood and covariate matrices
+
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a (species you want to use) perspective
 
 #now calculate the neighborhood (matrix) and set column and row names
