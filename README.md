@@ -41,7 +41,7 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 
 # Executing program
 
-#Read of data 
+$Read of data 
 
 #link to where files are - the below code will pick the newest file in the folder"
 
