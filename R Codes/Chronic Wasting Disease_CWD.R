@@ -1,7 +1,7 @@
 # These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases 
 #as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, 
 #with slight modification, to be applied to other diseases in the databases used. 
-#R Code written by Ofosuhene O. Apenteng and help from Lene Jung Kjær. 
+#R Code written by Ofosuhene O. Apenteng. 
 
 remove (list = objects() )
 library(lattice)
@@ -22,8 +22,6 @@ df <- file.info(list.files("./data", full.names = T,pattern = "infur" )) # modde
 europeanCountries = st_read('./data/GIS/Europe_shapefiles.shp')
 
 # CLEAN AND PREPARE DATA---------------------------------
-
-#https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/
 # I create this dataframe based the link above
 ADMIN <- c("Finland", "Finland", "Finland")
 #Cases <- c(1, 1, 1)
@@ -39,7 +37,6 @@ Finland_dat_CWD_deers <- Finland_dat_CWD
 Finland_dat_CWD_sf_deers <- st_as_sf(Finland_dat_CWD_deers, coords=c("Latitude","Longitude"),crs="EPSG:4326")
 
 #------------------------------------------------
-#https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/
 # I create this dataframe based the link above
 ADMIN <- c("Norway", "Norway", "Norway","Norway", "Norway", "Norway",
            "Norway", "Norway", "Norway","Norway", "Norway", "Norway",
@@ -84,12 +81,11 @@ Sweden_dat_CWD_deers <- Sweden_dat_CWD
 
 Sweden_dat_CWD_sf_deers <- st_as_sf(Sweden_dat_CWD_deers, coords=c("Latitude","Longitude"),crs="EPSG:4326")
 
-################################################################
+#-----------------------------------------
 #Read in landcover data
-prec<- rast("bio_12.tif")
-temp<- rast("bio_1.tif")
-corine <-rast("g1k_06wgs.tif")
-cor <- rast("corine_rat_LEVEL2.tif")
+prec<- rast("bio_12.tif") # Precipitation
+temp<- rast("bio_1.tif") # Temperature 
+cor <- rast("corine_rat_LEVEL2.tif") # Land cover 
 
 #------------------------------------------------------
 #--Plots
@@ -175,37 +171,4 @@ tm_shape(cor) +
                 labels="SVA")
 
 #-------------------------------------------------------
-#extract raster values to point locations using the terra package
-#prec
-precip <-terra::extract(prec, vect(Finland_dat_CWD_sf_deers))
-Finland_dat_CWD_sf_deers$prec <- precip$bio_12/100
-#temperature
-tempe <-terra::extract(temp, vect(Finland_dat_CWD_sf_deers))
-Finland_dat_CWD_sf_deers$temp <- tempe$bio_1/10
-#landcover
-cover <-terra::extract(cor, vect(Finland_dat_CWD_sf_deers))
-Finland_dat_CWD_sf_deers$cover <- cover$LABEL2
-
-#prec
-precip <-terra::extract(prec, vect(Sweden_dat_CWD_sf_deers))
-Sweden_dat_CWD_sf_deers$prec <- precip$bio_12/100
-#temperature
-tempe <-terra::extract(temp, vect(Sweden_dat_CWD_sf_deers))
-Sweden_dat_CWD_sf_deers$temp <- tempe$bio_1/10
-#landcover
-cover <-terra::extract(cor, vect(Sweden_dat_CWD_sf_deers))
-Sweden_dat_CWD_sf_deers$cover <- cover$LABEL2
-
-#prec
-precip <-terra::extract(prec, vect(Norway_dat_CWD_sf_deers))
-Norway_dat_CWD_sf_deers$prec <- precip$bio_12/100
-#temperature
-tempe <-terra::extract(temp, vect(Norway_dat_CWD_sf_deers))
-Norway_dat_CWD_sf_deers$temp <- tempe$bio_1/10
-#landcover
-cover <-terra::extract(cor, vect(Norway_dat_CWD_sf_deers))
-Norway_dat_CWD_sf_deers$cover <- cover$LABEL2
-#---------------------------------------------
-
-
 
