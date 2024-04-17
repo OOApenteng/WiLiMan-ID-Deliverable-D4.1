@@ -86,7 +86,9 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 #Multivariate regression analysis for negative binomial regression 
 
 #Time series analysis
+
 #set all cases to 1, so we are counting the number of outbreaks instead of the number of birds affected
+
 #Dates and week numbers are tricky as they differ from year to year. Here we use iso 8601 to create the new variables - isoweek and isoyear
 
 #check if any observations with week 53?
@@ -102,6 +104,7 @@ WOAH: https://www.woah.org/en/home/ (SharePoint)
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a (species you want to use) perspective
 
 #now calculate the neighborhood (matrix) and set column and row names
+
 #Now only keep countries in the neighborhood matrix where we have outbreak data and remove the newly created water connections as well
 
 #create a shape file with only countries where we have data - this is needed for the model
