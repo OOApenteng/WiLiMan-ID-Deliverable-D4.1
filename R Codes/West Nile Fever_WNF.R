@@ -576,7 +576,7 @@ za_WNF_horse_weekly <-za_WNF_horse_weekly %>%
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
@@ -680,7 +680,7 @@ za_WNF_birds_weekly <-za_WNF_birds_weekly %>%
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
@@ -800,7 +800,7 @@ za_WNF_WOEM_horse_weekly <-za_WNF_WOEM_horse_weekly %>%
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
