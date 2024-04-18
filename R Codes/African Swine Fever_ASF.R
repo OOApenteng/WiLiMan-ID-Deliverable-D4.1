@@ -839,7 +839,7 @@ za_ASF_pigs_weekly <-za_ASF_pigs_weekly %>%
   group_by(ADM0_A3, Year) %>% 
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
@@ -941,7 +941,7 @@ za_ASF_WildBoar_weekly <-za_ASF_WildBoar_weekly %>%
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
@@ -1064,7 +1064,7 @@ za_ASF_WOEM_pigs_weekly <-za_ASF_WOEM_pigs_weekly %>%
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
@@ -1187,7 +1187,7 @@ za_ASF_WOEM_boar_weekly <-za_ASF_WOEM_boar_weekly %>%
   complete(Week = 1:52, fill = list(no_outbreaks = 0))
 
 
-# CREATE DATA, NEIGHBORHOOD AND COVARIATE MATRICES ###
+# Create data, neighborhood and covariate matrices ###
 #first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a bird's perspective
 europeanCountries_water = st_read('./data/GIS/Europe_shapefiles_water.shp')
 
