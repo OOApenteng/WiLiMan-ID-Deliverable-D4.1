@@ -32,11 +32,17 @@ library(zoo)
 The following are the links where the data were downloaded in CSV files based on the description of the data between 2018 and 2023. You can, however, go directly to the websites provided below to choose the range you want. 
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
-Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus   
+
+Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
+
 Swedish Veterinary Agency: https://www.sva.se/en/wildlife/wildlife-health-and-disease-surveillance-in-sweden/map-of-chronic-wasting-disease-cwd/
-Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/. 
+
+Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/
+
 Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases
+
 WOAH: https://www.woah.org/en/home/ (SharePoint)
+
 WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
 
 
