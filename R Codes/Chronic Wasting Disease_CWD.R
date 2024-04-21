@@ -90,7 +90,7 @@ cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 #------------------------------------------------------
 #--Plots
 tm_shape(prec/100) +
-  tm_raster(title="Annual precipitation (CWD_Deers)",palette="Blues") +
+  tm_raster(title="Annual precipitation (CWD_Deers)",palette="Mako") +
   tm_shape(Finland_dat_CWD_sf_deers)+
   tm_layout(legend.outside = TRUE) +
   tm_dots(col="blue",shape = 9,size = 0.3)+
@@ -116,7 +116,7 @@ tmap_options(max.categories = 44)+
                 labels="SVA")
   
 tm_shape(temp/10) +
-  tm_raster(title="Annual mean temperature (CWD_Deers)", palette="Reds") +
+  tm_raster(title="Annual mean temperature (CWD_Deers)", palette=rev(hcl.colors(7, "PinkYl"))) +
   tmap_options(max.categories = 44)+
   tm_shape(Finland_dat_CWD_sf_deers)+
   tm_layout(legend.outside = TRUE) +
