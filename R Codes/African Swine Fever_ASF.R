@@ -175,48 +175,48 @@ cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 #-----------------------------------------------------------
 #Plots 
 tm_shape(prec/100) +
-  tm_raster(title="Annual precipitation (ASF_Pigs)",palette="Blues") +
+  tm_raster(title="Annual precipitation (ASF_Pigs)",palette="Mako") +
   tm_layout(legend.outside = TRUE) +
   tm_shape(europe_dat_ASF_sf_pigs)+ 
-  tm_dots(col="black",shape = 2,size = 0.3)+
+  tm_dots(col="black",shape = 2,size = 0.1)+
   tm_add_legend('symbol',
                 col = "black",
                 shape = 2,size = 0.3,
                 labels ="WOAH")+
   tm_shape(Empres_dat_ASF_sf_pigs)+
   tm_layout(legend.outside = TRUE) +
-  tm_dots(col="deeppink",shape = 8,size = 0.3)+
+  tm_dots(col="deeppink",shape = 8,size = 0.1)+
   tm_add_legend('symbol',
                 col = "deeppink",
                 shape = 8,size = 0.3,
                 labels="Empres_i")+
   tm_shape(WOEM_pigs)+
   tm_layout(legend.outside = TRUE) +
-  tm_dots(col="red",shape = 9,size = 0.3)+
+  tm_dots(col="red",shape = 9,size = 0.1)+
   tm_add_legend('symbol',
                 col = "red",
                 shape = 9,size = 0.3,
                 labels="Merged(WOAH&Empres_i)")
 
 tm_shape(prec/100) +
-  tm_raster(title="Annual precipitation (ASF_Wild Boar)",palette="Blues") +
+  tm_raster(title="Annual precipitation (ASF_Wild Boar)",palette="Mako") +
   tm_shape(europe_dat_ASF_sf_WildBoar)+ 
   tm_layout(legend.outside = TRUE) +
-  tm_dots(col="black",shape = 2,size = 0.3)+
+  tm_dots(col="black",shape = 2,size = 0.1)+
   tm_add_legend('symbol',
                 col = "black",
                 shape = 2,size = 0.3,
                 labels="WOAH")+
   tm_shape(Empres_dat_ASF_sf_WildBoar)+
   tm_layout(legend.outside = TRUE) +
-  tm_dots(col="deeppink",shape = 8,size = 0.3)+
+  tm_dots(col="deeppink",shape = 8,size = 0.1)+
   tm_add_legend('symbol',
                 col = "deeppink",
                 shape = 8,size = 0.3,
                 labels="Empres_i")+
   tm_shape(WOEM_boar)+
   tm_layout(legend.outside = TRUE) +
-  tm_dots(col="red",shape = 9,size = 0.3)+
+  tm_dots(col="red",shape = 9,size = 0.1)+
   tm_add_legend('symbol',
                 col = "red",
                 shape = 9,size = 0.3,
@@ -274,7 +274,7 @@ tm_shape(wild) +
 
 #----------------------------------------------
 tm_shape(temp/10) +
-  tm_raster(title="Annual mean temperature (ASF_Pigs)", palette="Reds") +
+  tm_raster(title="Annual mean temperature (ASF_Pigs)", palette=rev(hcl.colors(7, "PinkYl"))) +
   tmap_options(max.categories = 44)+
   tm_shape(europe_dat_ASF_sf_pigs)+ 
   tm_layout(legend.outside = TRUE) +
@@ -300,7 +300,7 @@ tm_shape(temp/10) +
 
 
 tm_shape(temp/10) +
-  tm_raster(title="Annual mean temperature (ASF_Wild Boar)", palette="Reds") +
+  tm_raster(title="Annual mean temperature (ASF_Wild Boar)", palette=rev(hcl.colors(7, "PinkYl"))) +
   tmap_options(max.categories = 44)+
   tm_shape(europe_dat_ASF_sf_WildBoar)+ 
   tm_layout(legend.outside = TRUE) +
