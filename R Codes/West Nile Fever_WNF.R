@@ -168,7 +168,7 @@ cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 #-------------------------------------------------------
 #--Plots
 tm_shape(prec/100) +
-  tm_raster(title="Annual precipitation (WNF_birds)",palette="Blues") +
+  tm_raster(title="Annual precipitation (WNF_birds)",palette="Mako") +
   tm_shape(europe_dat_WNF_sf_birds)+ 
   tm_layout(legend.outside = TRUE) +
   tm_dots(col="black",shape = 2,size = 0.3)+
@@ -193,7 +193,7 @@ tm_shape(prec/100) +
   
 
 tm_shape(prec/100) +
-  tm_raster(title="Annual precipitation (WNF_Horse)",palette="Blues") +
+  tm_raster(title="Annual precipitation (WNF_Horse)",palette="Mako") +
   tm_shape(europe_dat_WNF_sf_horse)+ 
   tm_layout(legend.outside = TRUE) +
   tm_dots(col="black",shape = 2,size = 0.3)+
@@ -217,7 +217,7 @@ tm_shape(prec/100) +
                 labels="Merged(WOAH&Empres_i)")
 #-----------------------------------------------
 tm_shape(temp/10) +
-  tm_raster(title="Annual mean temperature (WNF_birds)", palette="Reds") +
+  tm_raster(title="Annual mean temperature (WNF_birds)", palette=rev(hcl.colors(7, "PinkYl"))) +
   tmap_options(max.categories = 44)+
   tm_shape(europe_dat_WNF_sf_birds)+ 
   tm_layout(legend.outside = TRUE) +
@@ -242,7 +242,7 @@ tm_shape(temp/10) +
                 labels="Merged(WOAH&Empres_i)")
 
 tm_shape(temp/10) +
-  tm_raster(title="Annual mean temperature (WNF_Horse)", palette="Reds") +
+  tm_raster(title="Annual mean temperature (WNF_Horse)", palette=rev(hcl.colors(7, "PinkYl"))) +
   tmap_options(max.categories = 44)+
   tm_shape(europe_dat_WNF_sf_horse)+ 
   tm_layout(legend.outside = TRUE) +
