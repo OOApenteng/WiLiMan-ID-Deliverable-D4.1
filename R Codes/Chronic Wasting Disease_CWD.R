@@ -13,7 +13,7 @@ library(terra)
 library(tidyverse)
 library(dplyr)
 
-setwd("/Users/xqv795/Desktop/APENTENG_LENE")
+setwd("Your directory")
 ### READ IN newest OIE DATA ###
 ##link to where files are - the below code will pick the newest file in the folder"
 df <- file.info(list.files("./data", full.names = T,pattern = "infur" )) # modded
