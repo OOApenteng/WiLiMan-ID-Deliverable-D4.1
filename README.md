@@ -45,7 +45,7 @@ library(zoo)
 
 # Installing
 
-The following are the links where the data were downloaded in CSV files based on the description of the data between 2018 and 2023. You can, however, go directly to the websites provided below to choose the range you want. 
+The following are the links where the data were downloaded in CSV files based on the description of the data between 2018 and 2023. You can, however, go directly to the websites provided below to choose the range you want as well as not only the diseases listed in this project but other disease you may find it interested. 
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
 
