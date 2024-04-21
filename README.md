@@ -12,20 +12,35 @@ These lines of code were written to analyse ASF, WNF, and CWD from different pub
 The following libraries need to be installed to run the code
 
 library(lattice)
+
 library(tmap)
+
 library(readxl)
+
 library(sp)
+
 library(sf)
+
 library(terra)
+
 library(tidyverse)
+
 library(dplyr)
+
 library(glmmTMB)
+
 library(DHARMa)
+
 library(MuMIn)
-library(caTools) 
+
+library(caTools)
+
 library(caret)
+
 library(surveillance)
+
 library(spdep)
+
 library(zoo)
 
 # Installing
