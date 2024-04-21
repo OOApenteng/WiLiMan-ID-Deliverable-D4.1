@@ -898,7 +898,7 @@ Empres_dat_WNF_sf_humans<- Empres_dataH_WNF_sf_humans[!Empres_dataH_WNF_sf_human
 
 #--Plots
 tm_shape(prec/100) +
-  tm_raster(title="Annual precipitation (WNF_Human Beings)",palette="Blues") +
+  tm_raster(title="Annual precipitation (WNF_Human Beings)",palette="Mako") +
   tm_shape(Empres_dat_WNF_sf_humans)+
   tm_layout(legend.outside = TRUE) +
   tm_dots(col="deeppink",shape = 8,size = 0.3)+
@@ -908,7 +908,7 @@ tm_shape(prec/100) +
                 labels ="Empres-i")
 
 tm_shape(temp/10) +
-  tm_raster(title="Annual mean temperature (WNF_Human Beings)", palette="Reds") +
+  tm_raster(title="Annual mean temperature (WNF_Human Beings)", palette=rev(hcl.colors(7, "PinkYl"))) +
   tmap_options(max.categories = 44)+
   tm_shape(Empres_dat_WNF_sf_humans)+
   tm_layout(legend.outside = TRUE) +
