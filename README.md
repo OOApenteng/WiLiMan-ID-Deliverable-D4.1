@@ -10,6 +10,7 @@ These lines of code were written to analyse ASF, WNF, and CWD from different pub
 
 # Dependencies
 The following libraries need to be installed to run the code
+
 library(lattice)
 library(tmap)
 library(readxl)
