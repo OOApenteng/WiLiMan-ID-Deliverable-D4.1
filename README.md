@@ -66,7 +66,7 @@ WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
 
 #Read of data 
 
-#Read in the (a)biotic fectors and land cover data
+#Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
 
 prec<- rast("bio_12.tif") #Precipitation
 
