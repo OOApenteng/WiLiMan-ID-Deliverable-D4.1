@@ -50,16 +50,13 @@ The following are the links where the data were downloaded in CSV files based on
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
 
 Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
-
 In Norway there were only few cases which I have provided them in the R code
 
 Swedish Veterinary Agency: https://www.sva.se/en/wildlife/wildlife-health-and-disease-surveillance-in-sweden/map-of-chronic-wasting-disease-cwd/
-
 In Sweden there were only four cases which I have provided them in the R code
 
 Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/ 
-
-In Filand there were only three cases which I have provided them in the R code
+In Finland there were only three cases which I have provided them in the R code
 
 Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases
 
