@@ -482,39 +482,6 @@ m9<- glmmTMB(cases~prec+horses+cover, ziformula=~ 0, data=WOEM_horse1, family=nb
 summary(m9)
 m10<- glmmTMB(cases~prec+horses+ cover+(1|country), ziformula=~ 0, data=WOEM_horse1, family=nbinom1)
 summary(m10)
-
-#-----------------------------------------------------
-#Prediction
-library(caTools)
-datae = WOEM_horse1
-set.seed(1)
-#use 80% of dataset as training set and 20% as test set
-datae = as.data.frame(datae)
-num_obs = nrow(datae)
-train_index = sample(num_obs, size = trunc(0.80 * num_obs))
-train  <- datae[train_index, ]
-test   <- datae[-train_index, ]
-
-#Testing the accuracy
-library(caret)
-rmse = function(actual, predicted) {
-  sqrt(mean((actual - predicted) ^ 2))
-}
-
-library(Metrics) 
-# train RMSE
-Metrics::rmse(actual = train$cases, predicted = predict(m10, train))
-# test RMSE
-Metrics::rmse(actual = test$cases, predicted = predict(m10, test))
-
-# train R-square
-R2(predict(m10, train), train$cases)
-R2(predict(m10, test), test$cases)
-
-plot(train$cases,predict(m10, train),
-     ylab="Predicted cases (precipitation & horse density)",xlab="Observed cases",
-     main="Merged (WOAH&Empres_i) for WNF-Horses",pch=16, col="deeppink")
-
 #-----------------------------------------------------
 #retrieve coordinates in matrix form
 WOEM_horse2 = WOEM_horse1
