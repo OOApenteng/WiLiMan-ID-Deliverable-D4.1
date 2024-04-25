@@ -48,6 +48,7 @@ library(zoo)
 The following are the links where the data were downloaded in CSV files based on the description of the data between 2018 and 2023. You can, however, go directly to the websites provided below to choose the range you want as well as not only the diseases listed in this project but other disease you may find it interested. 
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
+I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023 
 
 Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
 In Norway there were only few cases which I have provided them in the R code
@@ -58,7 +59,9 @@ In Sweden there were only four cases which I have provided them in the R code
 Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/ 
 In Finland there were only three cases which I have provided them in the R code
 
-Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases
+Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases 
+
+I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023.
 
 WOAH: https://www.woah.org/en/home/ (SharePoint). This is easy to access it by contacting them through the link provided here and they provide or give you permission to access the data. 
 
