@@ -66,7 +66,7 @@ WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
 
 #Read of data 
 
-#Read in the bio climate and land cover data
+#Read in the (a)biotic fectors and land cover data
 
 prec<- rast("bio_12.tif") #Precipitation
 
@@ -75,6 +75,8 @@ temp<- rast("bio_1.tif") # Temperature
 stock <-rast("Pg_density.tif") #Pig density
 
 wild <-rast("wildboar_density.tif") # Wild boar density
+
+horses <-rast("Ho_density.tif") # Horse density
 
 cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 
