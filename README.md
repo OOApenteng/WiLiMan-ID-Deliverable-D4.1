@@ -63,7 +63,7 @@ WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
 
 CORINE Land Cover 2018 (vector/raster 100m), Europe, 6-yearly: https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download
 
-This is how the CORINE data was obtained. From this https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download you need to register and Corine Land Cover 2018 datastes in their full coverage can be downloaded in raster (100 m resolution) by selecting the following u2018_clc2018_v2020_20u1_raster100m, Area of interest(Europe)	Version(v2020_20u1), Resolution(100m), Type(Raster), and Format(Geotiff). You then need to add to cart and lick on download, and your request will be sent to you with your registered email with a link which you will then dowonload the file from. 
+This is how the CORINE data was obtained. From this https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download you need to register and Corine Land Cover 2018 datastes in their full coverage can be downloaded in raster (100 m resolution) by selecting the following u2018_clc2018_v2020_20u1_raster100m, Area of interest(Europe)	Version(v2020_20u1), Resolution(100m), Type(Raster), and Format(Geotiff). You then need to add to cart and lick on the download, and your request will be send to you with your registered email with a link which you will then dowonload the file from. In order to make it simple I have provided the said CORINE land cover in the data file. 
 
 
 
