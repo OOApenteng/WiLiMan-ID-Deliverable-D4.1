@@ -49,7 +49,7 @@ The following are the links where the data were downloaded in CSV files based on
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
 
-I downloaded by hand in comma-separated values (CSV) format. I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
+I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
 
 Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
 In Norway there were only few cases which I have provided them in the R code
@@ -62,7 +62,7 @@ In Finland there were only three cases which I have provided them in the R code
 
 Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases 
 
-I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
+I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
 
 WOAH: https://www.woah.org/en/home/ (SharePoint). This is easy to access it by contacting them through the link provided here and they provide or give you permission to access the data. 
 
