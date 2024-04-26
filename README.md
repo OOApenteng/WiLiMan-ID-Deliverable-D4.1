@@ -49,7 +49,7 @@ The following are the links where the data were downloaded in CSV files based on
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
 
-Follow the steps: 
+Follow these steps: 
 
 I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
 
@@ -64,7 +64,7 @@ In Finland there were only three cases which I have provided them in the R code
 
 Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases 
 
-Follow the steps: 
+Follow these steps: 
 
 I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
 
@@ -74,11 +74,9 @@ WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
 
 CORINE Land Cover 2018 (vector/raster 100m), Europe, 6-yearly: https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download
 
-Follow the steps: 
+Follow these steps: 
 
 This is how the CORINE data was obtained. From this https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download you need to register and Corine Land Cover 2018 datastes in their full coverage can be downloaded in raster (100 m resolution) by selecting the following: u2018_clc2018_v2020_20u1_raster100m, Area of interest(Europe),	Version(v2020_20u1), Resolution(100m), Type(Raster), and Format(Geotiff). After adding to your cart and selecting "Download," a request will be sent to the email address you have on file, from which you can download the file. I've included the aforementioned CORINE land cover in the data file to make things easier. 
-
-
 
 # Executing program
 
