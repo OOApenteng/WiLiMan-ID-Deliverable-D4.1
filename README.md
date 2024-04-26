@@ -142,6 +142,7 @@ cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 #Extract raster values to point locations of the (a)biotic factors using the terra package 
 
 #Univariate regression analysis to check for significance by negative binomial regression 
+
 #Multivariate regression analysis for negative binomial regression 
 
 #Time series analysis
