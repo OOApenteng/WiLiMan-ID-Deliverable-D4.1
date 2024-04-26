@@ -122,14 +122,18 @@ cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 #pass them into the function as the `coords` parameter
 
 #Remove these countries because we noticed that it was not part of Corine land cover (eg. "Ukraine", "Russian Federation", "Belarus")
+
 #-Merging these two database
 
 #Remove the NA's
 
-#We needed to represent spatial vector data to include points (coordinates), in view of that we added their latitude and longitude
-#For birds only
-#For wild horses only
-#For pigs only
+#We needed to represent spatial vector data to include points (coordinates), in view of that we added their latitude and longitude by selecting the following species:
+
+1. For birds only
+
+2. For wild horses only
+
+3. For pigs only
 
 #Read in the (a)biotic factors (download)
 
