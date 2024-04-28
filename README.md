@@ -86,7 +86,7 @@ This is how the CORINE data was obtained. From this https://land.copernicus.eu/e
 
 #Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
 
-These are images and were selected the meta-data (https://www.worldclim.org/data/worldclim21.html#google_vignette) extract data from images. Each of these (a)biotic factors downloaded as a “zip” file containing 12 GeoTiff (.tif) files.  
+These are images and were selected the meta-data (https://www.worldclim.org/data/worldclim21.html#google_vignette) extract data from images. Each of these (a)biotic factors downloaded as a “zip” file containing 12 GeoTiff (.tif) files. The code to extract or crop the European portion or part found in the R code. 
 
 prec<- rast("bio_12.tif") #Precipitation
 
