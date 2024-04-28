@@ -48,28 +48,29 @@ library(zoo)
 
 # Installing
 
-The following are the links where the data were downloaded in CSV files based on the description of the data between 2018 and 2023. You can, however, go directly to the websites provided below to choose the range you want as well as not only the diseases listed in this project but other disease you may find it interested. 
+The following are the described the data source links where the data the disease occurrence data and the metadata were downloaded in as CSV files based on the description of the data for the period between 2018 and 2023 and just for Europe. The code provided here is an example of processing the diseases ASF, WNF, and CWD but the user can use the data source links to select other diseases of interest and periods. 
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
 
 Follow these steps: 
 
-I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
+Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe), 3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (if the user want to use), and then finally extract or download in the format you prefer. 
+
 
 Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
-In Norway there were only few cases which I have provided them in the R code
+In Norway there were only few cases which are provided them in the R code for the user. 
 
 Swedish Veterinary Agency: https://www.sva.se/en/wildlife/wildlife-health-and-disease-surveillance-in-sweden/map-of-chronic-wasting-disease-cwd/
-In Sweden there were only four cases which I have provided them in the R code
+In Sweden there were only four cases which are provided them in the R code for the user.
 
 Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/ 
-In Finland there were only three cases which I have provided them in the R code
+In Finland there were only three cases which are provided them in the R code for the user.
 
 Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases 
 
 Follow these steps: 
 
-I downloaded by hand in comma-separated values (CSV) format. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe),  3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (you want to use), and then finally you extract or download in the format you prefer. 
+Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe), 3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (if the user want to use), and then finally extract or download in the format you prefer. 
 
 WOAH: https://www.woah.org/en/home/ (SharePoint). This is easy to access it by contacting them through the link provided here and they provide or give you permission to access the data. 
 
@@ -83,9 +84,9 @@ This is how the CORINE data was obtained. From this https://land.copernicus.eu/e
 
 # Executing program
 
-#Read of data 
-
 #Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
+
+These are images and were selected the meta-data (https://www.worldclim.org/data/worldclim21.html#google_vignette) extract data from images. Each of these (a)biotic factors downloaded as a “zip” file containing 12 GeoTiff (.tif) files.  
 
 prec<- rast("bio_12.tif") #Precipitation
 
