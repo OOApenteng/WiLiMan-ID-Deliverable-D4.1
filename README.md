@@ -11,7 +11,8 @@ R Code written by Ofosuhene O. Apenteng.
 ## Getting Started
 
 # Dependencies
-The following libraries need to be installed to run the code
+
+The following packages must be installed for this code to work correctly. 
 
 library(lattice)
 
