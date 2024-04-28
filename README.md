@@ -84,7 +84,7 @@ This is how the CORINE data was obtained. From this https://land.copernicus.eu/e
 
 # Executing program
 
-#Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
+Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
 
 These are images and were selected the meta-data (https://www.worldclim.org/data/worldclim21.html#google_vignette) extract data from images. Each of these (a)biotic factors downloaded as a “zip” file containing 12 GeoTiff (.tif) files. The code to extract or crop the European portion or part found in the R code. 
 
@@ -100,38 +100,35 @@ horses <-rast("Ho_density.tif") # Horse density
 
 cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 
-#link to where files are - the below code will pick the newest file in the folder"
+Clear and prepare data
 
-#Clear and prepare data
+Make sure that the outbreak start date is in date format
 
-#make sure that the outbreak start date is in date format
-#filter out other diseases than WNF, ASF, and CWD
+Filter out other diseases than WNF, ASF, and CWD
 
-#filter out other species than birds using the bird_names_20220517.csv file
+Filter out other species than birds using the bird_names_20220517.csv file
 
-#we only want data from Europe (so filter using the europe shapefile) and data between 2018 and 2023 where the period we are using is five years interval
+Only data were dowloaded for  Europe (so filter using the europe shapefile) and data between 2018 and 2023 where the period we are using is five years interval
 
-#For birds only
+For birds only
 
-#We needed to represent spatial vector data to include points (coordinates),
+Needed to represent spatial vector data to include points (coordinates),
 
-#-Remove these countries because we noticed that it was not part of Corine land cover
+Remove these countries because we noticed that it was not part of Corine land cover
 
-#-Empres_I--from different database
+Empres_I--from different database
 
-#Renaming
+Only data were dowloaded for Europe (so filter using the europe shapefile) and data from 2018 and onwards
 
-#we only want data from Europe (so filter using the europe shapefile) and data from 2018 and onwards
+The data was pass into the function as the `coords` parameter
 
-#pass them into the function as the `coords` parameter
+Remove these countries because we noticed that it was not part of Corine land cover (eg. "Ukraine", "Russian Federation", "Belarus")
 
-#Remove these countries because we noticed that it was not part of Corine land cover (eg. "Ukraine", "Russian Federation", "Belarus")
+Merging these two database
 
-#-Merging these two database
+Remove the NA's
 
-#Remove the NA's
-
-#We needed to represent spatial vector data to include points (coordinates), in view of that we added their latitude and longitude by selecting the following species:
+The spatial vector data includes points (coordinates), in view of that we added their latitude and longitude by selecting the following species:
 
 1. For birds only
 
@@ -139,49 +136,44 @@ cor <- rast("corine_rat_LEVEL2.tif") # Land cover
 
 3. For pigs only
 
-#Read in the (a)biotic factors (download)
 
-#-Plots
+Extract raster values to point locations of the (a)biotic factors using the terra package and the codes are provided in R codes
 
-#Extract raster values to point locations of the (a)biotic factors using the terra package 
+Univariate regression analysis to check for significance by negative binomial regression 
 
-#Univariate regression analysis to check for significance by negative binomial regression 
+Multivariate regression analysis for negative binomial regression 
 
-#Multivariate regression analysis for negative binomial regression 
+Time series analysis
 
-#Time series analysis
+Set all cases to 1,  for counting the number of outbreaks instead of the number of birds affected
 
-#set all cases to 1, so we are counting the number of outbreaks instead of the number of birds affected
+Dates and week numbers are tricky as they differ from year to year. Here we use iso 8601 to create the new variables - isoweek and isoyear
 
-#Dates and week numbers are tricky as they differ from year to year. Here we use iso 8601 to create the new variables - isoweek and isoyear
 
-#check if any observations with week 53?
+The data was converted into weekly bases. Take note here based on you want one can convert it to want eh or she want. 
 
-#The data was converted into weekly bases. Take note here based on you want one can convert it to want eh or she want. 
+Now aggregate per week per year per country
 
-#Now aggregate per week per year per country
+These methods fill in missing years for each country, by adding week 1 of the missing year (zero number of detections)
 
-#These methods fill in missing years for each country, by adding week 1 of the missing year (zero number of detections)
+Create data, neighborhood and covariate matrices
 
-#Create data, neighborhood and covariate matrices
+First read in shapefile where water is added as polygons to account for countries with water between them still being connected in a (species you want to use) perspective
 
-#first read in shapefile where water is added as polygons to account for countries with water between them still being connected in a (species you want to use) perspective
+Now calculate the neighborhood (matrix) and set column and row names
 
-#now calculate the neighborhood (matrix) and set column and row names
+Now only keep countries in the neighborhood matrix where we have outbreak data and remove the newly created water connections as well
 
-#Now only keep countries in the neighborhood matrix where we have outbreak data and remove the newly created water connections as well
+Create a shape file with only countries where we have data - this is needed for the model
 
-#create a shape file with only countries where we have data - this is needed for the model
+Convert sf object europeanCountries.sub to spatialpolygon dataframe as the sts class needs this format
 
-#convert sf object europeanCountries.sub to spatialpolygon dataframe as the sts class needs this format
+Make sure that the country order in the data matrix we will create is the same as in the neighborhood matrix
 
-#Make sure that the country order in the data matrix we will create is the same as in the neighborhood matrix
+Create a data matrix to be used in the model 
 
-#create a data matrix to be used in the model 
 
-#Plots
-
-#Code for checking for spatial autocorrelation:
+Code for checking for spatial autocorrelation:
 
 Examining whether there are any spatial patterns in the model's residuals is one quite easy method of finding spatial autocorrelation. In order to accomplish this, we plot the latitude and longitude coordinates of the sample unit so that the points' sizes, shapes, and/or colours correspond to the residuals related to these observations.
 
