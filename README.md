@@ -1,10 +1,12 @@
 # Project Title
 
-Dataflow
+Dataflow (Wiliman-ID)
 
 # Description
 
-These lines of code were written to analyse ASF, WNF, and CWD from different public domain databases as described in this report for WiLiMan_ID. The R code is intended to ensure the reproducibility of the results or, with slight modification, to be applied to other diseases in the databases used. R Code written by Ofosuhene O. Apenteng.
+These lines of code were written to analyse the following animal diseases African Swine Fever (ASF), West-Nile Fever (WNF), and Cronical Waste Disease (CWD) from different public domain databases. as described in this report for WiLiMan_ID. The R code is intended towill ensure the reproducibility of the results of the Wiliman-ID project or, with slight modification, to be applied to other diseases than described above in the databases used. 
+
+R Code written by Ofosuhene O. Apenteng.
 
 ## Getting Started
 
