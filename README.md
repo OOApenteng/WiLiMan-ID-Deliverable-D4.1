@@ -178,6 +178,6 @@ Code for checking for spatial autocorrelation:
 Examining whether there are any spatial patterns in the model's residuals is one quite easy method of finding spatial autocorrelation. In order to accomplish this, we plot the latitude and longitude coordinates of the sample unit so that the points' sizes, shapes, and/or colours correspond to the residuals related to these observations.
 
 # Acknowledgments
-I thank Beate Conrady for overseeing this project.
+Thanks to Beate Conrady for supporting, reviewing, and funding the project. 
 
 Thank you to Lene Jung Kjaer and Ana Rita Pinheiro Marques for the helpful suggestions you provided. 
