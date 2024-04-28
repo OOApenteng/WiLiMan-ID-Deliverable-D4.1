@@ -12,7 +12,7 @@ R Code written by Ofosuhene O. Apenteng.
 
 # Dependencies
 
-The following packages must be installed for this code to work correctly. 
+This is very important, the following packages must be installed for this code to work correctly. 
 
 library(lattice)
 
@@ -52,10 +52,9 @@ The following are the described the data source links where the data the disease
 
 European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
 
-Follow these steps: 
+Follow these steps to process the data from the European Centre for Disease Prevention and Control:
 
-Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe), 3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (if the user want to use), and then finally extract or download in the format you prefer. 
-
+Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Population (All cases), 3) Indicator (Reported cases), 4) Unit (North, East, West, and South), 5) Time, 6) RegionCode (Only Europe), 7) NumValue, and then finally extract or download in the format you prefer. 
 
 Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
 In Norway there were only few cases which are provided them in the R code for the user. 
@@ -68,7 +67,7 @@ In Finland there were only three cases which are provided them in the R code for
 
 Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases 
 
-Follow these steps: 
+Follow these steps to process the data from the Global Animal Disease Information System (EMPRES-i):
 
 Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe), 3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (if the user want to use), and then finally extract or download in the format you prefer. 
 
@@ -78,7 +77,7 @@ WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
 
 CORINE Land Cover 2018 (vector/raster 100m), Europe, 6-yearly: https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download
 
-Follow these steps: 
+Follow these steps to process the tif (image) for the CORINE Land Cover:
 
 This is how the CORINE data was obtained. From this https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download you need to register and Corine Land Cover 2018 datastes in their full coverage can be downloaded in raster (100 m resolution) by selecting the following: u2018_clc2018_v2020_20u1_raster100m, Area of interest(Europe),	Version(v2020_20u1), Resolution(100m), Type(Raster), and Format(Geotiff). After adding to your cart and selecting "Download," a request will be sent to the email address you have on file, from which you can download the file. I've included the aforementioned CORINE land cover in the data file to make things easier. 
 
@@ -128,7 +127,7 @@ Merging these two database
 
 Remove the NA's
 
-The spatial vector data includes points (coordinates), in view of that we added their latitude and longitude by selecting the following species:
+The spatial vector data includes points (coordinates), in view of this, their latitude and longitude were added by selecting the following species:
 
 1. For birds only
 
@@ -136,42 +135,27 @@ The spatial vector data includes points (coordinates), in view of that we added 
 
 3. For pigs only
 
-
 Extract raster values to point locations of the (a)biotic factors using the terra package and the codes are provided in R codes
 
-Univariate regression analysis to check for significance by negative binomial regression 
+Univariate negative binomial regression analysis to check for the significance of independent variables (e.g., precipitation, temperature, densities (pigs, horse, and wild boar)) on the dependent variable (i.e. disease occurrence data) by negative binomial regression
 
-Multivariate regression analysis for negative binomial regression 
+Multivariate negative binomial regression regression analysis (feed by only significant variables identified in the Univariate negative binomial regression analysis)for negative binomial regression
 
 Time series analysis
 
 Set all cases to 1,  for counting the number of outbreaks instead of the number of birds affected
 
-Dates and week numbers are tricky as they differ from year to year. Here we use iso 8601 to create the new variables - isoweek and isoyear
-
-
-The data was converted into weekly bases. Take note here based on you want one can convert it to want eh or she want. 
-
-Now aggregate per week per year per country
+The data was converted into weekly bases. Take note here based on the user want one can convert it to want eh or she want. 
 
 These methods fill in missing years for each country, by adding week 1 of the missing year (zero number of detections)
 
 Create data, neighborhood and covariate matrices
-
-First read in shapefile where water is added as polygons to account for countries with water between them still being connected in a (species you want to use) perspective
 
 Now calculate the neighborhood (matrix) and set column and row names
 
 Now only keep countries in the neighborhood matrix where we have outbreak data and remove the newly created water connections as well
 
 Create a shape file with only countries where we have data - this is needed for the model
-
-Convert sf object europeanCountries.sub to spatialpolygon dataframe as the sts class needs this format
-
-Make sure that the country order in the data matrix we will create is the same as in the neighborhood matrix
-
-Create a data matrix to be used in the model 
-
 
 Code for checking for spatial autocorrelation:
 
