@@ -1,7 +1,7 @@
 
-tif_map_world <- raster("5_Pg_2015_Da.tif") # for pigs and the user can
-#the same link get the rest of the population densities as stated in the 
-#README or in the code. 
+tif_map_world <- raster("5_Pg_2015_Da.tif") # for pigs and the user can the same link get the rest of the
+#population densities as stated in the README or in the code. 
+
 plot(tif_map_world)
 
 tif_map_eu_LIM <- extent(-10, 40, 30, 70)
