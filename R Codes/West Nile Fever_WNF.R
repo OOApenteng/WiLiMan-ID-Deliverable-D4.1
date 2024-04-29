@@ -160,10 +160,10 @@ WOEM_horse <- WOEM_horse[!WOEM_horse$country %in% RemoveCountries, ]
 
 ################################################################
 #Read in the (a)biotic feactors
-prec<- rast("bio_12.tif") #Precipitation
-temp<- rast("bio_1.tif") # Temperature
-horses <-rast("Ho_density.tif") # Horse density
-cor <- rast("corine_rat_LEVEL2.tif") # Land cover
+prec<- rast("./data/bio_12.tif") #Precipitation
+temp<- rast("./data/bio_1.tif") # Temperature
+horses <-rast("./data/Ho_density.tif") # Horse density
+cor <- rast("./data/corine_rat_LEVEL2.tif") # Land cover
 
 #-------------------------------------------------------
 #--Plots
