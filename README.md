@@ -50,34 +50,34 @@ library(zoo)
 
 The following are the described the data source links where the data the disease occurrence data and the metadata were downloaded in as CSV files based on the description of the data for the period between 2018 and 2023 and just for Europe. The code provided here is an example of processing the diseases ASF, WNF, and CWD but the user can use the data source links to select other diseases of interest and periods. 
 
-European Centre for Disease Prevention and Control: http://atlas.ecdc.europa.eu/public/index.aspx
+Extract European Centre for Disease Prevention and Control data: http://atlas.ecdc.europa.eu/public/index.aspx
 
-Follow these steps to process the data from the European Centre for Disease Prevention and Control:
+Follow these steps to process the data from the European Centre for Disease Prevention and Control by hand tasks are required:
 
 Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Population (All cases), 3) Indicator (Reported cases), 4) Unit (North, East, West, and South), 5) Time, 6) RegionCode (Only Europe), 7) NumValue, and then finally extract or download in the format you prefer. 
 
-Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
-In Norway there were only few cases which are provided them in the R code for the user. 
+Extract CWD data from Norwegian Veterinary Institute: http://apps.vetinst.no/skrantesykestatistikk/NO/#kasus  
+In Norway there were only few cases which are provided them in the R code for the user by hand tasks are required if the user wants to update. 
 
-Swedish Veterinary Agency: https://www.sva.se/en/wildlife/wildlife-health-and-disease-surveillance-in-sweden/map-of-chronic-wasting-disease-cwd/
-In Sweden there were only four cases which are provided them in the R code for the user.
+Extract CWD data from Swedish Veterinary Agency: https://www.sva.se/en/wildlife/wildlife-health-and-disease-surveillance-in-sweden/map-of-chronic-wasting-disease-cwd/
+In Sweden there were only four cases which are provided them in the R code for the user by hand tasks are required if the user wants to update.
 
-Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/ 
-In Finland there were only three cases which are provided them in the R code for the user.
+Extract CWD data from Finnish Food Authority: https://www.ruokavirasto.fi/en/animals/animal-health-and-diseases/animal-diseases/wildlife/chronic-wasting-disease-cwd-in-cervids/ 
+In Finland there were only three cases which are provided them in the R code for the user by hand tasks are required if the user wants to update.
 
-Global Animal Disease Information System (EMPRES-i): https://empres-i.apps.fao.org/diseases 
+Extract Global Animal Disease Information System (EMPRES-i) data: https://empres-i.apps.fao.org/diseases 
 
-Follow these steps to process the data from the Global Animal Disease Information System (EMPRES-i):
+Follow these steps to process the data from the Global Animal Disease Information System (EMPRES-i) by hand tasks are required:
 
 Comma-separated values (CSV) format were downloaded. Between the period 2018 and 2023. The following steps need to be follow: 1) Select the Disease, 2) Region (Europe), 3) Diagnosis status (Confirmed and Denied), 4) Animal type (Captive, Domestic, and Wild), 5) Observation date range, 6) Species (if the user want to use), and then finally extract or download in the format you prefer. 
 
-WOAH: https://www.woah.org/en/home/ (SharePoint). This is easy to access it by contacting them through the link provided here and they provide or give you permission to access the data. 
+Extract WOAH data: https://www.woah.org/en/home/ (SharePoint). This is easy to access it by contacting them through the link provided here and they provide or give you permission to access the data. 
 
-WorldClim: https://www.worldclim.org/data/worldclim21.html#google_vignette
+Extract climate data(s): https://www.worldclim.org/data/worldclim21.html#google_vignette in order to obtain this data by hand tasks are required. 
 
-CORINE Land Cover 2018 (vector/raster 100m), Europe, 6-yearly: https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download
+Extract CORINE Land Cover 2018 data (vector/raster 100m), Europe, 6-yearly: https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download
 
-Follow these steps to process the tif (image) for the CORINE Land Cover:
+Follow these steps to process the tif (image) for the CORINE Land Cover by hand tasks are required:
 
 This is how the CORINE data was obtained. From this https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download you need to register and Corine Land Cover 2018 datastes in their full coverage can be downloaded in raster (100 m resolution) by selecting the following: u2018_clc2018_v2020_20u1_raster100m, Area of interest(Europe),	Version(v2020_20u1), Resolution(100m), Type(Raster), and Format(Geotiff). After adding to your cart and selecting "Download," a request will be sent to the email address you have on file, from which you can download the file. I've included the aforementioned CORINE land cover in the data file to make things easier. 
 
