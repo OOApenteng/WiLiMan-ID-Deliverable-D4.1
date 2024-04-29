@@ -83,9 +83,9 @@ Sweden_dat_CWD_sf_deers <- st_as_sf(Sweden_dat_CWD_deers, coords=c("Latitude","L
 
 #-----------------------------------------
 #Read in landcover data
-prec<- rast("bio_12.tif") # Precipitation
-temp<- rast("bio_1.tif") # Temperature 
-cor <- rast("corine_rat_LEVEL2.tif") # Land cover 
+prec<- rast("./data/bio_12.tif") # Precipitation
+temp<- rast("./data/bio_1.tif") # Temperature 
+cor <- rast("./data/corine_rat_LEVEL2.tif") # Land cover 
 
 #------------------------------------------------------
 #--Plots
