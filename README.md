@@ -85,19 +85,19 @@ This is how the CORINE data was obtained. From this https://land.copernicus.eu/e
 
 Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
 
-These are images, and the meta-data that extracts data from images was chosen using this link: https://www.worldclim.org/data/worldclim21.html#google_vignette. Each of these (a)biotic factors were downloaded as a “zip” file containing 12 GeoTiff (.tif) files. The code to extract data from European portion or part can be found in the R code. 
+These are images, and the meta-data that extracts data from images was chosen using this link: https://www.worldclim.org/data/worldclim21.html#google_vignette. Each of these (a)biotic factors were downloaded as a “zip” file containing GeoTiff (.tif) files. The code to extract data from European portion or part can be found in the R code. 
 
-prec<- rast("bio_12.tif") #Precipitation
+prec<- rast("bio_12.tif") #Precipitation, the data extraction by hand tasks are required as example is provided in the R code
 
-temp<- rast("bio_1.tif") # Temperature
+temp<- rast("bio_1.tif") # Temperature, the data extraction by hand tasks are required as example is provided in the R code
 
-stock <-rast("Pg_density.tif") #Pig density 
+stock <-rast("Pg_density.tif") #Pig density, the data extraction by hand tasks are required as example is provided in the R code
 
-wild <-rast("wildboar_density.tif") # Wild boar density
+wild <-rast("wildboar_density.tif") # Wild boar density, the data extraction by hand tasks are required as example is provided in the R code
 
-horses <-rast("Ho_density.tif") # Horse density
+horses <-rast("Ho_density.tif") # Horse density, the data extraction by hand tasks are required as example is provided in the R code
 
-cor <- rast("corine_rat_LEVEL2.tif") # Land cover for level 2
+cor <- rast("corine_rat_LEVEL2.tif") # Land cover for level 2, the data extraction by hand tasks are required as example is provided in the R code and well process to obatained is also provided here. 
 
 Clear and prepare data
 
