@@ -73,7 +73,7 @@ Comma-separated values (CSV) format were downloaded. Between the period 2018 and
 
 Extract WOAH data: https://www.woah.org/en/home/ (SharePoint). This is easy to access it by contacting them through the link provided here and they provide or give you permission to access the data. 
 
-Extract climate data(s): https://www.worldclim.org/data/worldclim21.html#google_vignette in order to obtain this data by hand tasks are required. 
+Extract climate data(s): https://www.worldclim.org/data/bioclim.html in order to obtain this data by hand tasks are required. 
 
 Extract CORINE Land Cover 2018 data (vector/raster 100m), Europe, 6-yearly: https://land.copernicus.eu/en/products/corine-land-cover/clc2018#download
 
@@ -85,7 +85,7 @@ This is how the CORINE data was obtained. From this https://land.copernicus.eu/e
 
 Read in the (a)biotic fectors and land cover data, all these data are provided in the 'data'
 
-These are images, and the meta-data that extracts data from images was chosen using this link: https://www.worldclim.org/data/worldclim21.html#google_vignette. Each of these (a)biotic factors were downloaded as a “zip” file containing GeoTiff (.tif) files. The code to extract data from European portion or part can be found in the R code. 
+These are images, and the meta-data that extracts data from images was chosen using this link: https://www.worldclim.org/data/bioclim.html. Each of these (a)biotic factors were downloaded as a “zip” file containing GeoTiff (.tif) files. The code to extract data from European portion or part can be found in the R code. 
 
 prec<- rast("bio_12.tif") #Precipitation, the data extraction by hand tasks are required as example is provided in the R code
 
