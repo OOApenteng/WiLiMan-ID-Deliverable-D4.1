@@ -117,7 +117,7 @@ Remove these countries because we noticed that it was not part of Corine land co
 
 Empres_I--from different database
 
-Only data were dowloaded for Europe (so filter using the europe shapefile) and data from 2018 and onwards
+Only data were dowloaded for Europe (so filter using the europe shapefile) and data between 2018 and 2023
 
 The data was pass into the function as the `coords` parameter
 
