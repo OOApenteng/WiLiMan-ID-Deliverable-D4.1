@@ -6,7 +6,7 @@ Dataflow (Wiliman-ID)
 
 These lines of code were written to analyse the following animal diseases African Swine Fever (ASF), West-Nile Fever (WNF), and Cronical Waste Disease (CWD) from different public domain databases. The R code will ensure the reproducibility of the results of the Wiliman-ID project or, with slight modification, be applied to other diseases than described above. 
 
-R Code written by Ofosuhene O. Apenteng.
+R Code was written by Ofosuhene O. Apenteng.
 
 ## Getting Started
 
@@ -48,7 +48,7 @@ library(zoo)
 
 # Installing
 
-The following are the described the data source links where the data the disease occurrence data and the metadata were downloaded in as CSV files based on the description of the data for the period between 2018 and 2023 and just for Europe. The code provided here is an example of processing the diseases ASF, WNF, and CWD but the user can use the data source links to select other diseases of interest and periods. 
+The following described the data source links where the disease occurrence data and were downloaded as CSV files for the period 2018-2023 and just for Europe. The code provided here is an example of processing the diseases ASF, WNF, and CWD but the user can use the data source links to select other diseases of interest and periods. 
 
 Extract European Centre for Disease Prevention and Control data: http://atlas.ecdc.europa.eu/public/index.aspx
 
@@ -91,13 +91,13 @@ prec<- rast("bio_12.tif") #Precipitation
 
 temp<- rast("bio_1.tif") # Temperature
 
-stock <-rast("Pg_density.tif") #Pig density
+stock <-rast("Pg_density.tif") #Pig density 
 
 wild <-rast("wildboar_density.tif") # Wild boar density
 
 horses <-rast("Ho_density.tif") # Horse density
 
-cor <- rast("corine_rat_LEVEL2.tif") # Land cover
+cor <- rast("corine_rat_LEVEL2.tif") # Land cover for level 2
 
 Clear and prepare data
 
