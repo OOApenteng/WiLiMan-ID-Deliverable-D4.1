@@ -182,11 +182,11 @@ WOEM_boar<- WOEM_boar[!WOEM_boar$country %in% RemoveCountries, ]
 #stock <- crop(tif_map_world, subset_raster)
 #--------------End of Do not run----------------------------------------
 #Read in the bio climate and land cover data
-prec<- rast("bio_12.tif") #Precipitation
-temp<- rast("bio_1.tif") # Temperature
-stock <-rast("Pg_density.tif") #Pig density
-wild <-rast("wildboar_density.tif") # Wild boar density
-cor <- rast("corine_rat_LEVEL2.tif") # Land cover
+prec<- rast("./data/bio_12.tif") #Precipitation
+temp<- rast("./data/bio_1.tif") # Temperature
+stock <-rast("./data/Pg_density.tif") #Pig density
+wild <-rast("./data/wildboar_density.tif") # Wild boar density
+cor <- rast("./data/corine_rat_LEVEL2.tif") # Land cover
 #-----------------------------------------------------------
 #Plots 
 tm_shape(prec/100) +
